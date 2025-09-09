@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+
+# App data we do NOT want in Git
+chroma_db/
+models/
+docs/                 # keep real corpora out of source control; use a secure store
+rag_env/
+assets/*.png
+assets/*.jpg
+
+# Build & editor artifacts
+*.log
+.DS_Store
+.idea/
+.vscode/
+
+# Docker
+*.tgz
+*.tar

@@ -1,0 +1,46 @@
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: cloud-deploy/Dockerfile.api
+    restart: unless-stopped
+    environment:
+      LLM_PROVIDER: ${LLM_PROVIDER:-openai}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+    volumes:
+      - ..:/app
+    networks: [internal]
+
+  ui:
+    build:
+      context: ..
+      dockerfile: cloud-deploy/Dockerfile.ui
+    restart: unless-stopped
+    environment:
+      API_URL: ${PUBLIC_API_URL:-http://api:8000}
+    depends_on: [api]
+    networks: [internal]
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      DOMAIN: ${DOMAIN}
+      EMAIL: ${EMAIL}
+      API_UPSTREAM: ${API_UPSTREAM:-api:8000}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [api, ui]
+    networks: [internal]
+
+networks:
+  internal:
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -1,0 +1,25 @@
+{
+    email {$EMAIL}
+}
+
+{$DOMAIN} {
+    encode zstd gzip
+
+    @ui {
+        path /
+        path /favicon.ico
+        path /_stcore/*
+        path /stream
+    }
+    handle @ui {
+        reverse_proxy ui:8501
+    }
+
+    handle_path /api/* {
+        reverse_proxy {$.API_UPSTREAM}
+    }
+
+    handle {
+        reverse_proxy ui:8501
+    }
+}

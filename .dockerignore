@@ -1,0 +1,10 @@
+# keep images tiny—exclude big/local stuff from the build context
+models/
+chroma_db/
+docs/
+rag_env/
+__pycache__/
+.git/
+*.gguf
+*.zip
+*.tgz
