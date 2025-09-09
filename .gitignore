@@ -21,3 +21,5 @@ assets/*.jpg
 # Docker
 *.tgz
 *.tar
+docs/
+readme/
