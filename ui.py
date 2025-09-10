@@ -19,7 +19,7 @@ st.markdown(
         }
     </style>
     """,
-    unsafe_allow_html=True
+    unsafe_allow_html=True,
 )
 
 # Show logo
@@ -34,7 +34,9 @@ with st.form("ask_form", clear_on_submit=False):
     submitted = st.form_submit_button("Ask")
 
     if submitted and question:
-        response = requests.post(f"{API_URL}/ask", json={"question": question}, timeout=(10, REQUEST_TIMEOUT))
+        response = requests.post(
+            f"{API_URL}/ask", json={"question": question}, timeout=(10, REQUEST_TIMEOUT)
+        )
         if response.ok:
             answer = response.json()["answer"]
             st.markdown("### Answer:")

@@ -4,10 +4,12 @@ from rag import query_rag
 
 app = FastAPI()
 
+
 class Query(BaseModel):
     question: str
+
 
 @app.post("/ask")
 async def ask(query: Query):
     result = query_rag(query.question)
-    return {"answer": result['result']}
+    return {"answer": result["result"]}

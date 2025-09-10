@@ -32,7 +32,9 @@ with st.expander("📁 View and Manage Documents"):
 
 with st.expander("🔁 Re-index and Monitor"):
     if st.button("Re-index Documents", use_container_width=True):
-        result = subprocess.run([sys.executable, "populate_db.py"], capture_output=True, text=True)
+        result = subprocess.run(
+            [sys.executable, "populate_db.py"], capture_output=True, text=True
+        )
         if result.returncode == 0:
             st.success("✅ Documents re-indexed successfully!")
             try:
