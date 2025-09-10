@@ -7,7 +7,7 @@ chromadb==0.5.5
 langchain-huggingface==0.0.3
 PyPDF2==3.0.1
 pypdf==4.3.1
-numpy==1.26.4
+numpy==2.0.2
 sentence-transformers>=2.6.0
 langchain-openai>=0.1.0
 openai>=1.40.0
