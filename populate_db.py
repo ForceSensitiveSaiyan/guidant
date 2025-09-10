@@ -3,7 +3,9 @@ from pathlib import Path
 from functools import partial
 
 from langchain_community.document_loaders import (
-    PyPDFLoader, DirectoryLoader, TextLoader
+    PyPDFLoader,
+    DirectoryLoader,
+    TextLoader,
 )
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -15,6 +17,7 @@ CHROMA_DB_DIR = "./chroma_db"
 COLLECTION_NAME = "langchain"
 EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
+
 def get_pdf_title(file_path: str) -> str:
     try:
         reader = PdfReader(file_path)
@@ -24,6 +27,7 @@ def get_pdf_title(file_path: str) -> str:
     except Exception:
         pass
     return os.path.basename(file_path)
+
 
 def load_docs():
     docs = []
@@ -42,8 +46,7 @@ def load_docs():
 
     # TXTs
     txt_loader = DirectoryLoader(
-        DOCS_DIR, glob="**/*.txt",
-        loader_cls=partial(TextLoader, encoding="utf-8")
+        DOCS_DIR, glob="**/*.txt", loader_cls=partial(TextLoader, encoding="utf-8")
     )
     txt_docs = txt_loader.load()
     print(f"Found {len(txt_docs)} TXT doc(s).")
@@ -56,6 +59,7 @@ def load_docs():
     print(f"Total raw docs: {len(docs)}")
     return docs
 
+
 def main():
     if not os.path.isdir(DOCS_DIR):
         raise SystemExit(f"Docs dir not found: {DOCS_DIR}")
@@ -67,7 +71,9 @@ def main():
     splits = splitter.split_documents(docs)
     for s in splits:
         s.metadata.setdefault("source", s.metadata.get("file_path", "unknown"))
-        s.metadata.setdefault("title", os.path.basename(s.metadata.get("source", "unknown")))
+        s.metadata.setdefault(
+            "title", os.path.basename(s.metadata.get("source", "unknown"))
+        )
     print(f"Loaded and split into {len(splits)} chunks.")
 
     # Fresh rebuild
@@ -92,6 +98,7 @@ def main():
         print(f"Indexed {min(i+batch, total)}/{total}")
 
     print("ChromaDB rebuilt successfully.")
+
 
 if __name__ == "__main__":
     main()
