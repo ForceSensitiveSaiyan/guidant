@@ -2,7 +2,7 @@ fastapi==0.115.0
 uvicorn[standard]==0.30.6
 langchain==0.2.16
 langchain-community==0.2.16
-langchain-chroma==0.1.2
+langchain-chroma==0.2.5
 chromadb==0.5.5
 langchain-huggingface==0.0.3
 PyPDF2==3.0.1
