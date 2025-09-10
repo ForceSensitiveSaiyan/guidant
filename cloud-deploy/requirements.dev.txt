@@ -4,7 +4,7 @@ langchain==0.2.16
 langchain-community==0.2.16
 langchain-chroma==0.1.2
 chromadb==0.5.5
-langchain-huggingface==0.0.3
+langchain-huggingface==0.3.1
 PyPDF2==3.0.1
 pypdf==4.3.1
 numpy==1.26.4
